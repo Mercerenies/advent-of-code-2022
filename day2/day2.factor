@@ -1,7 +1,7 @@
 
 USING: splitting sequences kernel prettyprint io.encodings.utf8 io.files assocs accessors
        combinators locals math.order math ;
-IN: day2
+IN: aoc2022.day2
 
 SYMBOLS: +rock+ +paper+ +scissors+ ;
 

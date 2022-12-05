@@ -1,6 +1,6 @@
 
 USING: io.encodings.utf8 io.files kernel math.order math prettyprint arrays sequences sets grouping ;
-IN: day3
+IN: aoc2022.day3
 
 CONSTANT: all-values "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 

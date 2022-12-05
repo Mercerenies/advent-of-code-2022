@@ -1,6 +1,6 @@
 
 USING: prettyprint io.encodings.utf8 io.files splitting sequences math.parser math.order sorting ;
-IN: day1
+IN: aoc2022.day1
 
 : read-input ( -- arr )
     "input1.txt" utf8 file-lines { "" } split

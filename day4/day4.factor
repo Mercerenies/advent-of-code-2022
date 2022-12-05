@@ -1,6 +1,6 @@
 
 USING: io.encodings.utf8 io.files math.intervals splitting math.parser prettyprint kernel sequences ;
-IN: day4
+IN: aoc2022.day4
 
 : un2array ( arr -- x y )
     dup length 2 assert=
