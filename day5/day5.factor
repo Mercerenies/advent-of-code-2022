@@ -1,5 +1,5 @@
 
-USING: io.encodings.utf8 io.files splitting prettyprint accessors aoc2022.rawstring kernel memoize
+USING: io.encodings.utf8 io.files splitting prettyprint accessors aoc2022.util kernel memoize
        pcre sequences math.parser assocs locals math vectors strings math.matrices sequences.extras ;
 IN: aoc2022.day5
 
@@ -7,11 +7,6 @@ TUPLE: move amount source destination ;
 
 MEMO: move-regexp ( -- regexp )
     R" move (?<amount>\d+) from (?<source>\d+) to (?<destination>\d+)" <compiled-pcre> ;
-
-:: range ( a b step -- arr )
-    b a - step /i <vector> a
-    [ dup b < ] [ [ suffix! ] keep step + ] while
-    drop ;
 
 : parse-move ( str -- move )
     move-regexp findall first
@@ -34,14 +29,6 @@ MEMO: move-regexp ( -- regexp )
     [ parse-stacks ]
     [ [ parse-move ] map ]
     bi* ;
-
-: remove-last! ( seq -- seq last )
-    dup length 1 - swap [ nth ] [ remove-nth! ] 2bi swap ;
-
-: remove-tail! ( seq n -- seq tail )
-    [ <vector> ] keep
-    [ [ remove-last! ] dip swap suffix! ] times
-    reverse! ;
 
 :: move-reversed ( amount source destination -- )
     source amount remove-tail! nip

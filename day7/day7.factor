@@ -1,7 +1,7 @@
 
 USING: io.files io.encodings.utf8 prettyprint splitting grouping sequences vectors
        kernel locals accessors strings math combinators assocs fry arrays math.parser
-       sorting ;
+       sorting aoc2022.util ;
 IN: day7
 
 TUPLE: command { name string } { args sequence } { output sequence } ;
@@ -10,18 +10,6 @@ TUPLE: directory { name string } { contents vector } ;
 TUPLE: cli-state { folder vector } ;
 
 INSTANCE: directory assoc
-
-: and-then ( ..a obj1 quot: ( ..a obj1 -- ..a obj2 ) -- ..a obj1/2 )
-    over [ call ] [ drop ] if ; inline
-
-: or-else ( ..a obj1 quot: ( ..a obj1 -- ..a obj2 ) -- ..a obj1/2 )
-    over [ drop ] [ call ] if ; inline
-
-: or-else* ( ..a obj quot: ( ..a -- ..a obj ) -- ..a obj )
-    '[ drop @ ] or-else ; inline
-
-: index-of ( seq quot: ( .. a -- .. ? ) -- index/? )
-    find drop ; inline
 
 M: directory at* ( key dir -- value/f ? )
     contents>> swap '[ name>> _ = ] find swap >boolean ;
@@ -58,21 +46,6 @@ M: directory total-size ( dir -- i )
 
 : <directory> ( name contents -- dir )
     \ directory boa ;
-
-: suffix!-if-nonempty ( outer inner -- outer )
-    dup empty? [ drop ] [ suffix! ] if ;
-
-! Variant of split*-when that includes each element that we split on
-! in the following subsequence.
-:: split*-when-prefix ( .. seq quot: ( .. elt -- .. ? ) -- .. pieces )
-    V{ } clone V{ } clone
-    seq [
-        dup quot call [
-            [ suffix!-if-nonempty V{ } clone ] dip
-        ] when
-        suffix!
-    ] each
-    suffix!-if-nonempty ; inline
 
 : parse-command-text ( command -- command-name pieces )
     " " split [ second ] [ 2 tail ] bi ;

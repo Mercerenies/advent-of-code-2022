@@ -1,10 +1,7 @@
 
-USING: io.encodings.utf8 io.files math.intervals splitting math.parser prettyprint kernel sequences ;
+USING: io.encodings.utf8 io.files math.intervals splitting math.parser prettyprint kernel
+       sequences aoc2022.util ;
 IN: aoc2022.day4
-
-: un2array ( arr -- x y )
-    dup length 2 assert=
-    [ 0 swap nth ] [ 1 swap nth ] bi ;
 
 : hyphenated>interval ( str -- i1 )
     "-" split [ string>number ] map un2array [a,b] ;
@@ -17,9 +14,6 @@ IN: aoc2022.day4
 
 : one-contains-the-other ( i1 i2 -- ? )
     [ interval-subset? ] [ swap interval-subset? ] 2bi or ;
-
-: empty-interval? ( i -- ? )
-    empty-interval = ;
 
 : part1 ( -- x )
     read-input [ un2array one-contains-the-other ] count ;
