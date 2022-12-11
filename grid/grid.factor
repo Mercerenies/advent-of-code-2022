@@ -1,6 +1,6 @@
 
 USING: accessors sequences kernel aoc2022.util locals math combinators.short-circuit
-       arrays ;
+       arrays math.vectors ;
 IN: aoc2022.grid
 
 CONSTANT: +up+    {  0 -1 }
@@ -33,3 +33,9 @@ TUPLE: grid contents ;
 : grid-positions ( grid -- seq )
     [ 0 swap grid-width 1 range ] [ 0 swap grid-height 1 range ] bi
     [ 2array ] cartesian-map concat ;
+
+: chessboard-length ( xy -- n )
+    [ abs ] map supremum ;
+
+: chessboard-distance ( xy1 xy2 -- n )
+    v- chessboard-length ;

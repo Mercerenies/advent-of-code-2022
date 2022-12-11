@@ -96,4 +96,7 @@ SINGLETON: (util-sentinel)
     [ '[ @ not ] find drop ] keepd swap
     [ 1 + ] [ dup length ] if* head-slice ; inline
 
+:: replace-nth ( ..a n seq quot: ( ..a elt -- ..a elt ) -- ..a )
+    n seq nth quot call n seq set-nth ; inline
+
 SYNTAX: R" parse-raw-string suffix! ;
