@@ -99,4 +99,7 @@ SINGLETON: (util-sentinel)
 :: replace-nth ( ..a n seq quot: ( ..a elt -- ..a elt ) -- ..a )
     n seq nth quot call n seq set-nth ; inline
 
+: divisible? ( a b -- ? )
+    mod 0 = ;
+
 SYNTAX: R" parse-raw-string suffix! ;
