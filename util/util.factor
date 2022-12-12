@@ -1,7 +1,8 @@
 
 USING: strings.parser kernel lexer namespaces strings.parser.private sequences
        strings arrays math.intervals locals math vectors fry math.parser strings
-       lists.lazy combinators.short-circuit math.order sequences.extras ;
+       lists.lazy combinators.short-circuit math.order sequences.extras
+       classes quotations combinators macros ;
 IN: aoc2022.util
 
 SINGLETON: (util-sentinel)
@@ -16,6 +17,10 @@ SINGLETON: (util-sentinel)
 : un2array ( arr -- x y )
     dup length 2 assert=
     [ first ] [ second ] bi ;
+
+: un3array ( arr -- x y z )
+    dup length 3 assert=
+    [ first ] [ second ] [ third ] tri ;
 
 : empty-interval? ( i -- ? )
     empty-interval = ;
@@ -101,5 +106,20 @@ SINGLETON: (util-sentinel)
 
 : divisible? ( a b -- ? )
     mod 0 = ;
+
+: 1assoc ( k v -- assoc )
+    2array 1array ;
+
+: (word>typecheck) ( word -- quot )
+   [ dupd execute( -- x ) instance? ] curry ; inline
+
+MACRO: typecase ( assoc -- quot )
+    [
+        dup array? [
+            un2array
+            [ (word>typecheck) ] dip
+            2array
+        ] when
+    ] map [ cond ] curry ;
 
 SYNTAX: R" parse-raw-string suffix! ;
