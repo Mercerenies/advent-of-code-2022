@@ -7,6 +7,9 @@ IN: aoc2022.util
 
 SINGLETON: (util-sentinel)
 
+CONSTANT: infinity 1/0.
+CONSTANT: -infinity -1/0.
+
 : parse-raw-string ( -- str )
     lexer get skip-blank
     SBUF" " clone [ lexer get (parse-string) ] keep >string ;
@@ -43,6 +46,9 @@ SINGLETON: (util-sentinel)
 
 : or-else ( ..a obj1 quot: ( ..a obj1 -- ..a obj2 ) -- ..a obj1/2 )
     over [ drop ] [ call ] if ; inline
+
+: and-then* ( ..a obj quot: ( ..a -- ..a obj ) -- ..a obj )
+    '[ drop @ ] and-then ; inline
 
 : or-else* ( ..a obj quot: ( ..a -- ..a obj ) -- ..a obj )
     '[ drop @ ] or-else ; inline
@@ -109,6 +115,15 @@ SINGLETON: (util-sentinel)
 
 : 1assoc ( k v -- assoc )
     2array 1array ;
+
+: repeat ( ..a n quot: ( ..a -- ..a x ) -- ..a seq )
+    [ 0 swap 1 range ] dip '[ drop @ ] map ; inline
+
+: (hide-index) ( quot: ( .. elt -- .. result/f ) -- quot: ( .. i elt -- .. i result/f ) )
+    '[ swap _ dip 1 + swap ] ; inline
+
+: map-find-with-index ( .. seq quot: ( .. elt -- .. result/f ) -- .. result i elt )
+    [ -1 ] 2dip (hide-index) map-find swapd dup [ [ drop f ] dip ] unless ; inline
 
 : (word>typecheck) ( word -- quot )
    [ dupd execute( -- x ) instance? ] curry ; inline
