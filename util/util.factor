@@ -125,6 +125,22 @@ CONSTANT: -infinity -1/0.
 : map-find-with-index ( .. seq quot: ( .. elt -- .. result/f ) -- .. result i elt )
     [ -1 ] 2dip (hide-index) map-find swapd dup [ [ drop f ] dip ] unless ; inline
 
+: (eq>f) ( obj -- obj/f )
+    dup +eq+ = [ drop f ] when ;
+
+: (f>eq) ( obj/f -- obj )
+    +eq+ or ;
+
+: lex ( <=> <=> -- <=> )
+    over +eq+ = [ nip ] [ drop ] if ;
+
+: (lex-compare) ( .. range seq1 seq2 quot: ( .. a b -- .. <=> ) -- .. <=> )
+    '[ [ _ nth ] [ _ nth ] bi @ (eq>f) ] map-find drop (f>eq) ; inline
+
+:: lex-compare ( .. seq1 seq2 quot: ( .. a b -- .. <=> ) -- .. <=> )
+    0 seq1 seq2 [ length ] bi@ min 1 range seq1 seq2 quot (lex-compare)
+    seq1 seq2 [ length ] compare lex ; inline
+
 : (word>typecheck) ( word -- quot )
    [ dupd execute( -- x ) instance? ] curry ; inline
 
