@@ -2,7 +2,7 @@
 USING: io.files io.encodings.utf8 kernel prettyprint splitting aoc2022.util
        aoc2022.grid combinators sequences math.parser arrays fry math math.vectors
        accessors math.functions locals sets ;
-IN: day9
+IN: aoc2022.day9
 
 TUPLE: line direction amount ;
 

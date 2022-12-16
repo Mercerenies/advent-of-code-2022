@@ -2,7 +2,7 @@
 USING: io.files io.encodings.utf8 prettyprint splitting grouping sequences vectors
        kernel locals accessors strings math combinators assocs fry arrays math.parser
        sorting aoc2022.util ;
-IN: day7
+IN: aoc2022.day7
 
 TUPLE: command { name string } { args sequence } { output sequence } ;
 TUPLE: file { name string } { size integer } ;

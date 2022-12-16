@@ -2,7 +2,7 @@
 USING: io.files io.encodings.utf8 kernel prettyprint math.parser strings sequences
        accessors aoc2022.util aoc2022.grid fry math.vectors math arrays sets vectors
        lists.lazy lists combinators.extras combinators sequences.extras ;
-IN: day8
+IN: aoc2022.day8
 
 : read-input ( -- grid )
     "input8.txt" utf8 file-lines

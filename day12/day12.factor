@@ -1,7 +1,7 @@
 
 USING: io.files io.encodings.utf8 prettyprint kernel aoc2022.grid sequences combinators aoc2022.util
        math arrays accessors math.vectors namespaces locals math.order ;
-IN: day12
+IN: aoc2022.day12
 
 TUPLE: terrain grid start-position end-position ;
 SYMBOL: terrain-data

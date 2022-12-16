@@ -1,7 +1,7 @@
 
 USING: io.files io.encodings.utf8 kernel sequences math.parser splitting prettyprint
        accessors assocs fry math combinators aoc2022.util make io ;
-IN: day10
+IN: aoc2022.day10
 
 TUPLE: machine x ;
 

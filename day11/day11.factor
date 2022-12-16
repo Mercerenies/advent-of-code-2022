@@ -2,7 +2,7 @@
 USING: io.files io.encodings.utf8 kernel prettyprint splitting math vectors sequences
        combinators regexp aoc2022.util math.parser accessors strings assocs sorting
        math.functions fry ;
-IN: day11
+IN: aoc2022.day11
 
 TUPLE: operation lhs op rhs ;
 
