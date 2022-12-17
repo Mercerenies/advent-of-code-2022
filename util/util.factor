@@ -33,6 +33,9 @@ CONSTANT: -infinity -1/0.
     [ dup b < ] [ [ suffix! ] keep step + ] while
     drop ;
 
+: inclusive-range ( a b step -- arr )
+    [ 1 + ] dip range ;
+
 : remove-last! ( seq -- seq last )
     dup length 1 - swap [ nth ] [ remove-nth! ] 2bi swap ;
 
@@ -140,6 +143,9 @@ CONSTANT: -infinity -1/0.
 :: lex-compare ( .. seq1 seq2 quot: ( .. a b -- .. <=> ) -- .. <=> )
     0 seq1 seq2 [ length ] bi@ min 1 range seq1 seq2 quot (lex-compare)
     seq1 seq2 [ length ] compare lex ; inline
+
+: minmax ( obj1 obj2 -- min max )
+    [ min ] [ max ] 2bi ;
 
 : (word>typecheck) ( word -- quot )
    [ dupd execute( -- x ) instance? ] curry ; inline
