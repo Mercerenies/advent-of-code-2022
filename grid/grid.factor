@@ -1,6 +1,6 @@
 
 USING: accessors sequences kernel aoc2022.util locals math combinators.short-circuit
-       arrays math.vectors fry ;
+       arrays math.vectors fry aoc2022.grid-like ;
 IN: aoc2022.grid
 
 CONSTANT: +up+    {  0 -1 }
@@ -10,22 +10,19 @@ CONSTANT: +right+ {  1  0 }
 
 TUPLE: grid contents ;
 
+INSTANCE: grid grid-like
+
 : <grid> ( contents -- grid )
     \ grid boa ;
 
 : grid-of-size ( wh initial-value -- grid )
     [ un2array swap ] dip '[ _ _ <repetition> >array ] repeat <grid> ;
 
-: grid-get ( xy grid -- elt )
+M: grid grid-get ( xy grid -- elt )
     [ un2array ] dip contents>> nth nth ;
 
-: grid-set ( elt xy grid -- )
+M: grid grid-set ( elt xy grid -- )
     [ un2array ] dip contents>> nth set-nth ;
-
-:: grid-change ( ..a xy grid quot: ( ..a elt -- ..b elt ) -- ..b )
-    xy grid grid-get
-    quot call
-    xy grid grid-set ; inline
 
 : grid-map ( grid quot: ( a -- a ) -- grid )
     [ contents>> ] dip '[ _ map ] map <grid> ; inline
@@ -46,7 +43,7 @@ TUPLE: grid contents ;
 :: (grid-bounds?) ( x y w h -- ? )
     { [ x 0 >= ] [ x w < ] [ y 0 >= ] [ y h < ] } 0&& ;
 
-: grid-bounds? ( xy grid -- ? )
+M: grid grid-bounds? ( xy grid -- ? )
     [ un2array ] dip
     [ grid-width ] [ grid-height ] bi
     (grid-bounds?) ;
